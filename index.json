@@ -226,6 +226,119 @@
           "type" : "http"
         }
       },
+      "put" : {
+        "tags" : [ "pets" ],
+        "summary" : "Update a pet",
+        "operationId" : "UpdatePet",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "description" : "The id of the pet to update",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Pet object that needs to be updated in the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewPet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "description" : "URI that may access the resource",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewPetResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "httpMethod" : "PUT",
+          "uri" : "http://petstore.execute-api.ap-south-1.amazonaws.com/petstore/pets/{petId}",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
+            }
+          },
+          "requestParameters" : {
+            "integration.request.path.petId" : "method.request.path.petId"
+          },
+          "passthroughBehavior" : "when_no_match",
+          "type" : "http"
+        }
+      },
+      "delete" : {
+        "tags" : [ "pets" ],
+        "summary" : "Delete a pet",
+        "operationId" : "DeletePet",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "description" : "The id of the pet to delete",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "headers" : {
+              "Access-Control-Allow-Origin" : {
+                "description" : "URI that may access the resource",
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Empty"
+                }
+              }
+            }
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "httpMethod" : "DELETE",
+          "uri" : "http://petstore.execute-api.ap-south-1.amazonaws.com/petstore/pets/{petId}",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200",
+              "responseParameters" : {
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
+            }
+          },
+          "requestParameters" : {
+            "integration.request.path.petId" : "method.request.path.petId"
+          },
+          "passthroughBehavior" : "when_no_match",
+          "type" : "http"
+        }
+      },
       "options" : {
         "parameters" : [ {
           "name" : "petId",
@@ -273,7 +386,7 @@
             "default" : {
               "statusCode" : "200",
               "responseParameters" : {
-                "method.response.header.Access-Control-Allow-Methods" : "'GET,OPTIONS'",
+                "method.response.header.Access-Control-Allow-Methods" : "'GET,PUT,DELETE,OPTIONS'",
                 "method.response.header.Access-Control-Allow-Headers" : "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
                 "method.response.header.Access-Control-Allow-Origin" : "'*'"
               }
